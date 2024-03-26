@@ -118,11 +118,52 @@ Endpoints handle various aspects of user authentication, registration, and passw
 - `POST /auth/forget_password`: User initiates password reset.
 - `POST /auth/reset_password`: User resets their password.
 
+Genres Endpoints:
+
+- `/genres (GET)`: Retrieve all genres.
+- `/genres/genre_id` (GET): Retrieve a specific genre by its ID.
+- `/genres/genre_id` (DELETE): Delete a genre by its ID.
+- `/genres (POST)`: Create a new genre.
+- `/genres/genre_id` (PUT): Update an existing genre.
+
+Artists Endpoints:
+
+- `/artists (GET):` Retrieve all artists.
+- `/artists/artist_id` (GET): Retrieve a specific artist by its ID.
+- `/artists/artist_id` (DELETE): Delete an artist by its ID.
+- `/artists (POST)`: Create a new artist.
+- `/artists/artist_id` (PUT): Update an existing artist.
+Albums Endpoints:
+
+- `/albums (GET)`: Retrieve all albums.
+- `/albums/album_id` (GET): Retrieve a specific album by its ID.
+- `/albums/album_id` (DELETE): Delete an album by its ID.
+- `/albums (POST)`: Create a new album.
+- `/albums/album_id` (PUT): Update an existing album.
+
+Tracks Endpoints:
+
+- `/tracks` (GET): Retrieve all tracks.
+- `/tracks/track_id` (GET): Retrieve a specific track by its ID.
+- `/tracks/track_id` (DELETE): Delete a track by its ID.
+- `/tracks (POST)`: Create a new track.
+- `/tracks/track_id` (PUT): Update an existing track.
+
+Other Endpoints:
+
+`/album_success` (POST): Predict the success of an album.
+`/new_albums` (POST): Retrieve new albums based on release date.
+`/recommend_similar_artists` (POST): Recommend similar artists.
+`/track_genre` (POST): Classify track genre.
+`/cluster_artists` (POST): Cluster artists based on attributes.
+`/most_listened_artists` (POST): Retrieve most listened artists.
+`/popular_artists` (POST): Retrieve popular artists based on follower and popularity.
+
 
 
 ## Author
 - Email: [faustinemuhayemariya44@gmail.com]()
 
-- Twitter: [faustine@van](https://twitter.com/44Fatech?s=09)
+- Twitter: [faustine@van]https://twitter.com/44Fatech?s=09
 
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/muhayemariya-faustine-404376267?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
