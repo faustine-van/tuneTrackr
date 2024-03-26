@@ -1,0 +1,31 @@
+# Python bytecode files
+*.pyc
+*.pyo
+
+# package dependencies
+__pycache__/
+
+# Virtual envirnment
+env/
+venv/
+.env
+.venv
+ENV/
+
+
+# Translations
+*.mo
+*.pot
+
+# React js
+*/node_modules
+*\node_modules
+package-lock.json
+
+# Visual Studio Code # 
+.vscode/* 
+!.vscode/settings.json 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history
