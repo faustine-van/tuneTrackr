@@ -55,13 +55,14 @@ TuneTrackr API
 
 
 ### Setup
-- First copy file name it `.env`
+  1. First copy file name it `.env`
   	using this command `copy .env.shadow .env`
-- add environment variables to it:
+  2. add environment variables to it:
 
-How to get `JWT_SECRET_KEY` key
-  - run `python3 generate_token.py` and, then copy it
-  - add the key to `JWT_SECRET_KEY` in `.env` file
+- How to get `JWT_SECRET_KEY` key
+
+  1. run `python3 generate_token.py` and, then copy it
+  2. add the key to `JWT_SECRET_KEY` in `.env` file
 
 ```
 $ pip3 install -r requirements.txt
