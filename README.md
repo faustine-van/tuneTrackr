@@ -55,9 +55,9 @@ TuneTrackr API
 
 
 ### Setup
-1. First copy file name it `.env`
-  	using this command `copy .env.shadow env`
-2. add environment variables to it:
+- First copy file name it `.env`
+  	using this command `copy .env.shadow .env`
+- add environment variables to it:
 
 How to get `JWT_SECRET_KEY` key
   - run `python3 generate_token.py` and, then copy it
