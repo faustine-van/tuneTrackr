@@ -7,14 +7,15 @@ from models.base import Base, BaseTune
 
 class Album(BaseTune, Base):
     """album"""
-    __tablename__ = 'albums'
+
+    __tablename__ = "albums"
 
     title = Column(String(255))
     release_date = Column(DateTime)
     label = Column(String(128))
     popularity = Column(Integer, default=0)
     total_tracks = Column(Integer, default=0)
-    artist_id = Column(String, ForeignKey('artists.id'))
+    artist_id = Column(String, ForeignKey("artists.id"))
 
     artists = relationship("Artist", back_populates="albums")
     tracks = relationship("Track", back_populates="albums")

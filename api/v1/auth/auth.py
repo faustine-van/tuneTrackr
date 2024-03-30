@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ objects that handle all authentication of RestFul API"""
 import datetime
+
 # from threading import Thread
 from flask_mail import Message, Mail
 from flask_jwt_extended import (
@@ -27,10 +28,15 @@ from api.v1.auth.helpers import (
     is_token_revoked,
 )
 from api.v1.auth.docs.auth_user import (
-    register_swagger, login_swagger, logout_swagger,
-    profile_swagger, refresh_swagger,
-    revoke_access_swagger, revoke_refresh_swagger,
-    forget_password_swagger, reset_password_swagger
+    register_swagger,
+    login_swagger,
+    logout_swagger,
+    profile_swagger,
+    refresh_swagger,
+    revoke_access_swagger,
+    revoke_refresh_swagger,
+    forget_password_swagger,
+    reset_password_swagger,
 )
 
 
@@ -44,26 +50,27 @@ def post_user():
         data = request.get_json()
     except Exception:
         return jsonify({"msg": "Not a JSON"}), 400
-    
-    if not data.get('email'):
-        return jsonify({"msg": 'Missing email'}), 400
-    if not data.get('password'):
-        return jsonify({"msg": 'Missing password'}), 400
-    
+
+    if not data.get("email"):
+        return jsonify({"msg": "Missing email"}), 400
+    if not data.get("password"):
+        return jsonify({"msg": "Missing password"}), 400
+
     # Check if email already exists
-    if dbStorage.search(User, {'email': data.get('email')}):
-        return jsonify({"msg": 'Email already exists'}), 400
-    
+    if dbStorage.search(User, {"email": data.get("email")}):
+        return jsonify({"msg": "Email already exists"}), 400
+
     try:
         new_instance = User(**data)
         new_instance.save()
         # Generate token
         token = new_instance.get_reset_token()
-        return jsonify({"msg": "User created successfully", "token": token}), 201
+        return jsonify({"msg": "User created successfully",
+                        "token": token}), 201
     except Exception as e:
         # Log the exception for debugging
         print(f"Error creating user: {e}")
-        return jsonify({'msg': "Can't create User"}), 500
+        return jsonify({"msg": "Can't create User"}), 500
 
 
 @auth_s.route("/login", methods=["POST"], strict_slashes=False)
@@ -74,15 +81,15 @@ def login():
         data = request.get_json()
     except Exception:
         return jsonify({"msg": "Not a JSON"}), 400
-    
+
     email = data.get("email")
     password = data.get("password")
     if not email:
-        return jsonify({"msg": 'Missing email'}), 400
+        return jsonify({"msg": "Missing email"}), 400
     if not password:
-        return jsonify({"msg": 'Missing password'}), 400
+        return jsonify({"msg": "Missing password"}), 400
 
-    users = dbStorage.search(User, {'email': email})
+    users = dbStorage.search(User, {"email": email})
     if not users:
         return jsonify({"msg": "User not found for this email"}), 404
     for user in users.values():
@@ -184,10 +191,10 @@ def send_reset_link():
         data = request.get_json()
     except Exception:
         return jsonify({"msg": "Not a JSON"}), 400
-    
+
     email = data.get("email")
     if not email:
-        return jsonify({"msg": 'Missing email'}), 400
+        return jsonify({"msg": "Missing email"}), 400
 
     all_users = dbStorage.all(User)
     users = [user for user in all_users.values() if user.email == email]
@@ -200,30 +207,27 @@ def send_reset_link():
     url = url_for("auth_s.reset_password")
     subject = "TuneTrackr Reset your Password"
     sender = "faustinemuhayemariya44@gmail.com"
-    text_body = f"""Dear, User
-    To reset your password click on the following link:
+    text_body = f"""Dear User,
+
+    To reset your password, simply click the link below:
 
     {url}?reset_token={reset_token}
 
-    If you have not requested a password reset simply ignore this message.
+    If you haven't requested a password reset,
+    you can safely ignore this message.
 
-    Sincerely
-
-    RepairRevoltHub Support Team"""
-
-    html_body = f"""<p>Dear, User</p>
-      <p>
-        To reset your password
-        <a href="{ url}?reset_token={reset_token}">
-         click here
-        </a>.
-      </p>
-      <p>Alternatively, you can paste the following link in your browser's address bar:</p>
-      <p>{ url}</p>
-      <p>If you have not requested a password reset simply ignore this message.</p>
-      <p>Sincerely</p>
-      <p>RepairRevoltHub Support Team</p>
+    Best regards,
+    TuneTrackr Support Team
     """
+
+    html_body = f"""<p>Dear User,</p>
+    <p>To reset your password, simply
+        <a href="{url}?reset_token={reset_token}">click here</a>.</p>
+    <p>If you haven't requested a password reset,
+        you can safely ignore this message.</p>
+    <p>Best regards,<br>RepairRevoltHub Support Team</p>
+    """
+
     send_email(
         subject,
         sender=sender,
@@ -231,10 +235,12 @@ def send_reset_link():
         text_body=text_body,
         html_body=html_body,
     )
-    message = f"Click the link to reset your password: {url}?reset_token={reset_token}"
+
+    msg = f"Reset your password now: {url}?reset_token={reset_token}"
+
     # message = "A link to change to your password has been sent to your email"
 
-    return jsonify({"email": message})
+    return jsonify({"email": msg})
 
 
 @auth_s.route("/reset_password", methods=["PUT"], strict_slashes=False)
@@ -246,10 +252,10 @@ def reset_password():
         data = request.get_json()
     except Exception:
         return jsonify({"msg": "Not a JSON"}), 400
-    
+
     password = data.get("password")
     if not password:
-        return jsonify({"msg": 'Missing password'}), 400
+        return jsonify({"msg": "Missing password"}), 400
 
     reset_token = request.args.get("reset_token")
     try:

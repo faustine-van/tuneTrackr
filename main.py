@@ -28,11 +28,11 @@ for data in dbStorage.search(User, {"password": "12345"}).values():
 # dbStorage.save()
 
 # count
-count = dbStorage.count()
-print(count)
+# count = dbStorage.count()
+# print(count)
 
 # delete obj
-# for del_user in dbStorage.search({'email': 'kali'}).values():
+# for del_user in dbStorage.search({sour'email': 'kali'}).values():
 #    dbStorage.remove(del_user)
 # dbStorage.save()
 

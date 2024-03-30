@@ -39,8 +39,8 @@ swagger_template = {
         "host": "",  # site
         "basePath": "/api",
         "license": {
-            "name": "License of API",
-            "url": "https://github.com/faustine-van/tuneTrackr?tab=MIT-1-ov-file",
+         "name": "License of API",
+         "url": "https://github.com/faustine-van/tuneTrackr?tab=MIT-1-ov-file",
         },
     },
     "schemes": ["http", "https"],

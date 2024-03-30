@@ -12,8 +12,14 @@ from models.artist import Artist
 from models.track import Track
 
 cfg = Config()
-classes = {"User": User, "Role": Role, 'Track': Track,
-          'Album': Album, 'Genre': Genre, 'Artist': Artist}
+classes = {
+    "User": User,
+    "Role": Role,
+    "Track": Track,
+    "Album": Album,
+    "Genre": Genre,
+    "Artist": Artist,
+}
 
 
 class DBStorage:

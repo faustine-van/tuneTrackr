@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """index module"""
 from flask import jsonify
 from flasgger import swag_from

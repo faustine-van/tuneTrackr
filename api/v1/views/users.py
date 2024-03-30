@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ objects that handle all authentication of RestFul API"""
 from flasgger import swag_from
 from flask import jsonify
@@ -11,6 +11,7 @@ from api.v1.views.docs.users_d import (
     update_user,
     delete_user,
 )
+
 
 @app_views.route("/users", methods=["GET"], strict_slashes=False)
 @swag_from(get_users)
@@ -50,13 +51,13 @@ def updateuser(user_id):
     user = dbStorage.get(User, user_id)
     if not user:
         return jsonify({"msg": "User not found"}), 404
-    
+
     try:
         data = request.get_json()
     except Exception:
         return jsonify({"msg": "Not a JSON"}), 400
-    
-    ignore = ['created_at', 'updated_at']
+
+    ignore = ["created_at", "updated_at"]
 
     for key, value in data.items():
         if key not in ignore:

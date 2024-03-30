@@ -7,10 +7,9 @@ from models.base import Base, BaseTune
 
 class Genre(BaseTune, Base):
     """album"""
-    __tablename__ = 'genres'
+
+    __tablename__ = "genres"
 
     name = Column(String(50))
 
     artists = relationship("Artist", back_populates="genres")
-
-

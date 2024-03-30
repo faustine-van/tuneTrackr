@@ -35,12 +35,16 @@ class BaseTune:
             for key, val in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, val)
-            if kwargs.get("created_at", None) and isinstance(self.created_at, str):
-                self.created_at = datetime.strptime(kwargs["created_at"], FORMAT)
+            if kwargs.get("created_at", None) and isinstance(self.created_at,
+                                                             str):
+                self.created_at = datetime.strptime(kwargs["created_at"],
+                                                    FORMAT)
             else:
                 self.created_at = datetime.utcnow()
-            if kwargs.get("updated_at", None) and isinstance(self.updated_at, str):
-                self.updated_at = datetime.strptime(kwargs["updated_at"], FORMAT)
+            if kwargs.get("updated_at", None) and isinstance(self.updated_at,
+                                                             str):
+                self.updated_at = datetime.strptime(kwargs["updated_at"],
+                                                    FORMAT)
             else:
                 self.updated_at = datetime.utcnow()
             if kwargs.get("id", None) is None:
