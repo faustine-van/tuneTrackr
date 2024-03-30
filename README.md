@@ -55,35 +55,13 @@ TuneTrackr API
 
 
 ### Setup
-First create `.env` file add environment variables folow:
-
-```
-# .env
-
-# DATABASE and API
-DB_USER
-DB_PASS
-DB_TUNETRACKR
-DB_HOST
-API_HOST 
-API_PORT
-DEBUG
-
-# SECRECT KEY
-JWT_SECRET_KEY
-
-# variable for Gmail SMTP
-MAIL_SERVER
-MAIL_PORT
-MAIL_USE_TLS
-MAIL_USERNAME
-MAIL_PASSWORD
-MAIL_DEBUG
-```
+1. First copy file name it `.env`
+  	using this command `copy .env.shadow env`
+2. add environment variables to it:
 
 How to get `JWT_SECRET_KEY` key
-  - run `python3 generate_token.py`
-  - add the key to `JWT_SECRET_KEY` in `.env` file 
+  - run `python3 generate_token.py` and, then copy it
+  - add the key to `JWT_SECRET_KEY` in `.env` file
 
 ```
 $ pip3 install -r requirements.txt
