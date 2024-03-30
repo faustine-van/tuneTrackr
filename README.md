@@ -151,13 +151,13 @@ Tracks Endpoints:
 
 Other Endpoints:
 
-`/album_success` (POST): Predict the success of an album.
-`/new_albums` (POST): Retrieve new albums based on release date.
-`/recommend_similar_artists` (POST): Recommend similar artists.
-`/track_genre` (POST): Classify track genre.
-`/cluster_artists` (POST): Cluster artists based on attributes.
-`/most_listened_artists` (POST): Retrieve most listened artists.
-`/popular_artists` (POST): Retrieve popular artists based on follower and popularity.
+- `/album_success` (POST): Predict the success of an album.
+- `/new_albums` (POST): Retrieve new albums based on release date.
+- `/recommend_similar_artists` (POST): Recommend similar artists.
+- `/track_genre` (POST): Classify track genre.
+- `/cluster_artists` (POST): Cluster artists based on attributes.
+- `/most_listened_artists` (POST): Retrieve most listened artists.
+- `/popular_artists` (POST): Retrieve popular artists based on follower and popularity.
 
 
 
