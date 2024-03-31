@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ 3-main module """
 import requests
 from datetime import datetime

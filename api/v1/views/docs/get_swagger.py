@@ -1,3 +1,4 @@
+"""get"""
 get_top_popular = {
     "tags": ["artists, albums, tracks"],
     "operationId": "getPopular",

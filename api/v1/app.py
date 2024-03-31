@@ -24,6 +24,7 @@ jwt.init_app(app)
 # main
 mail = Mail(app)
 # documentations
+URL = "https://github.com/faustine-van/tuneTrackr?tab=MIT-1-ov-file"
 swagger_template = {
     "swagger": "2.0",
     "info": {
@@ -40,7 +41,7 @@ swagger_template = {
         "basePath": "/api",
         "license": {
          "name": "License of API",
-         "url": "https://github.com/faustine-van/tuneTrackr?tab=MIT-1-ov-file",
+         "url": f'{URL}',
         },
     },
     "schemes": ["http", "https"],

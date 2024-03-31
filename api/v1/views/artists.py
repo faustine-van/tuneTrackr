@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ objects that handle all authentication of RestFul API"""
 from flasgger import swag_from
 from flask import jsonify, request
@@ -71,7 +71,7 @@ def updateartist(artist_id):
 @app_views.route("/artists/<artist_id>", methods=["DELETE"],
                  strict_slashes=False)
 @swag_from(delete_artist)
-def deleteartist(artist_id):
+def delete_artist(artist_id):
     """
     Delete all artist
     """

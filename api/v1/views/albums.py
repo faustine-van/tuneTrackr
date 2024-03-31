@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ objects that handle all authentication of RestFul API"""
 from flasgger import swag_from
-from flask import jsonify, import request
+from flask import jsonify, request
 from models.album import Album
 from models import dbStorage
 from api.v1.views import app_views

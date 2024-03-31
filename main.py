@@ -1,6 +1,7 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """main.file"""
 from models.user import User
+from models.artist import Artist
 from models import dbStorage
 
 # Create a new user instance
@@ -8,7 +9,7 @@ user = User(email="bibo.com", password="12345")
 # user1 = User(email='bruno@gmail.com', password='12345')
 
 # Save the user to the database
-user.save()
+# user.save()
 # user1.save()
 
 # Print the user data as JSON
@@ -16,7 +17,7 @@ user.save()
 #    print(user.to_json())
 
 # search data
-for data in dbStorage.search(User, {"password": "12345"}).values():
+for data in dbStorage.search(User, {"email": "faustinemuhayemariya44@gmail.com"}).values():
     print(data.to_json())
 
 # updated
@@ -28,8 +29,8 @@ for data in dbStorage.search(User, {"password": "12345"}).values():
 # dbStorage.save()
 
 # count
-# count = dbStorage.count()
-# print(count)
+count = dbStorage.count()
+print(count)
 
 # delete obj
 # for del_user in dbStorage.search({sour'email': 'kali'}).values():
