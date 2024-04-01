@@ -24,7 +24,38 @@ def view_tracks():
     Get all tracks
     """
     all_tracks = [track.to_json() for track in dbStorage.all(Track).values()]
-    return jsonify({"count": len(all_tracks), "items": all_tracks}), 200
+
+    formatted_tracks = []
+    for track_json in all_tracks:
+        # Access related artist and album information
+        artist = dbStorage.get(Artist, track_json["artist_id"])
+        album = dbStorage.get(Album, track_json["album_id"])
+
+        # Construct new formatted track dictionary
+        new_track_dict = {
+            "id": track_json["id"],
+            "name": track_json["name"],
+            "popularity": track_json["popularity"],
+            "created_at": track_json["created_at"],
+            "updated_at": track_json["updated_at"],
+            "artists": {
+                "artist_id": track_json["artist_id"],
+                "name": artist.name if artist else None,
+            },
+            "album": {
+                "album_id": track_json["album_id"],
+                "title": album.title if album else None,
+                "label": album.label if album else None,
+            },
+            "release_date": track_json["release_date"],
+            "track_position": track_json["track_position"],
+            "track_rank": track_json["track_rank"],
+        }
+
+        # Append the formatted track dictionary to the list
+        formatted_tracks.append(new_track_dict)
+
+    return jsonify({"count": len(all_tracks), "items": formatted_tracks}), 200
 
 
 @app_views.route("/tracks/<track_id>", methods=["GET"], strict_slashes=False)
@@ -39,15 +70,15 @@ def view_track(track_id):
     track = dbStorage.get(Track, track_id)
     if not track:
         return jsonify({"msg": "track not found"}), 404
-    
+
     album = dbStorage.get(Album, track.album_id)
     if not album:
         return jsonify({"msg": "album not found"}), 404
-    
+
     artist = dbStorage.get(Artist, track.artist_id)
     if not artist:
         return jsonify({"msg": "artist not found"}), 404
- 
+
     track_json = track.to_json()
     track_dict = track_json
     new_track_dict = {
@@ -56,20 +87,16 @@ def view_track(track_id):
         "popularity": track_dict["popularity"],
         "created_at": track_dict["created_at"],
         "updated_at": track_dict["updated_at"],
-        "artists": {
-            "artist_id": track_dict["artist_id"],
-            "name": artist.name
-        },
+        "artists": {"artist_id": track_dict["artist_id"], "name": artist.name},
         "album": {
             "album_id": track_dict["album_id"],
             "title": album.title,
-            "label": album.label
+            "label": album.label,
         },
         "release_date": track_dict["release_date"],
         "track_position": track_dict["track_position"],
-        "track_rank": track_dict["track_rank"]
+        "track_rank": track_dict["track_rank"],
     }
-
 
     return jsonify(new_track_dict), 200
 
@@ -102,8 +129,7 @@ def updatetrack(track_id):
     return jsonify(track.to_json()), 200
 
 
-@app_views.route("/tracks/<track_id>", methods=["DELETE"],
-                 strict_slashes=False)
+@app_views.route("/tracks/<track_id>", methods=["DELETE"], strict_slashes=False)
 @swag_from(delete_track)
 def deletetrack(track_id):
     """
@@ -138,8 +164,7 @@ def post_track():
         new_instance.save()
         # Generate token
         token = new_instance.get_reset_token()
-        return jsonify({"msg": "track created successfully",
-                        "token": token}), 201
+        return jsonify({"msg": "track created successfully", "token": token}), 201
     except Exception as e:
         # Log the exception for debugging
         print(f"Error creating track: {e}")

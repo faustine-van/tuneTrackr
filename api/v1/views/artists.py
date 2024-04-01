@@ -68,8 +68,7 @@ def updateartist(artist_id):
     return jsonify(artist.to_json()), 200
 
 
-@app_views.route("/artists/<artist_id>", methods=["DELETE"],
-                 strict_slashes=False)
+@app_views.route("/artists/<artist_id>", methods=["DELETE"], strict_slashes=False)
 @swag_from(delete_artist)
 def delete_artist(artist_id):
     """
@@ -106,8 +105,7 @@ def post_artist():
         new_instance.save()
         # Generate token
         token = new_instance.get_reset_token()
-        return jsonify({"msg": "artist created successfully",
-                        "token": token}), 201
+        return jsonify({"msg": "artist created successfully", "token": token}), 201
     except Exception as e:
         # Log the exception for debugging
         print(f"Error creating artist: {e}")

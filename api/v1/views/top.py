@@ -4,9 +4,7 @@ import pandas as pd
 from flask import jsonify, abort, request
 from flasgger import swag_from
 from api.v1.views import app_views
-from api.v1.views.trains.get_top import (
-    get_popular, get_new_albums, get_top_artists
-)
+from api.v1.views.trains.get_top import get_popular, get_new_albums, get_top_artists
 from api.v1.views.docs.get_swagger import get_top_popular
 from models.album import Album
 from models.artist import Artist
@@ -26,7 +24,7 @@ def top_popular(item_type):
         num_items = int(request.args.get("item_count", default=0))
     except ValueError:
         return jsonify({"msg": "Invalid 'item_count' value"}), 400
-    
+
     data = []
 
     item_types = [Album, Artist, Track]
@@ -76,11 +74,11 @@ def top_popular(item_type):
 @app_views.route("/artists/top_artists", methods=["GET"], strict_slashes=False)
 def top_artists():
     """top artists, albums, tracks"""
-    try:
-        itype = request.args.get("item_type")
-    except Exception:
+    itype = request.args.get("item_type")
+    if itype is None:
         return jsonify({"msg": "Missing 'itype'"}), 400
-
+    elif itype == "":
+        return jsonify({"msg": "Missing 'itype value'"}), 400
 
     try:
         num_items = int(request.args.get("item_count", default=0))
@@ -99,14 +97,13 @@ def top_artists():
         ids = get_top_artists(itype, df)
     else:
         ids = get_top_artists(itype, df, num_items)
-    
-    print(ids)
+
     remaining_ids = set(ids)
-    
+
     results = search_items(Artist, remaining_ids)
 
     res = [item.to_json() for item in results]
-    
+
     return jsonify({"count": len(res), "items": res}), 200
 
 

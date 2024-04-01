@@ -9,3 +9,4 @@ from api.v1.views.artists import *
 from api.v1.views.albums import *
 from api.v1.views.tracks import *
 from api.v1.views.top import *
+from api.v1.views.grouping import *

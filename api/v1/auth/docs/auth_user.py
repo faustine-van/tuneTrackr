@@ -49,10 +49,7 @@ login_swagger = {
                     "email": {"type": "string"},
                     "password": {"type": "string"},
                 },
-                "example": {
-                    "email": "examples@gmail.com",
-                    "password": "examples1234"
-                },
+                "example": {"email": "examples@gmail.com", "password": "examples1234"},
             },
         }
     ],

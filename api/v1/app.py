@@ -40,8 +40,8 @@ swagger_template = {
         "host": "",  # site
         "basePath": "/api",
         "license": {
-         "name": "License of API",
-         "url": f'{URL}',
+            "name": "License of API",
+            "url": f"{URL}",
         },
     },
     "schemes": ["http", "https"],

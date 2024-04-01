@@ -40,8 +40,7 @@ def view_genre(genre_id):
     return jsonify(genre.to_json()), 200
 
 
-@app_views.route("/genres/<genre_id>", methods=["PUT"],
-                 strict_slashes=False)
+@app_views.route("/genres/<genre_id>", methods=["PUT"], strict_slashes=False)
 @swag_from(update_genre)
 def updategenre(genre_id):
     """
@@ -69,8 +68,7 @@ def updategenre(genre_id):
     return jsonify(genre.to_json()), 200
 
 
-@app_views.route("/genres/<genre_id>", methods=["DELETE"],
-                 strict_slashes=False)
+@app_views.route("/genres/<genre_id>", methods=["DELETE"], strict_slashes=False)
 @swag_from(delete_genre)
 def deletegenre(genre_id):
     """
@@ -105,8 +103,7 @@ def post_genre():
         new_instance.save()
         # Generate token
         token = new_instance.get_reset_token()
-        return jsonify({"msg": "genre created successfully",
-                        "token": token}), 201
+        return jsonify({"msg": "genre created successfully", "token": token}), 201
     except Exception as e:
         # Log the exception for debugging
         print(f"Error creating genre: {e}")

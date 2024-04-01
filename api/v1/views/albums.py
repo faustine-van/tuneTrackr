@@ -68,8 +68,7 @@ def updatealbum(album_id):
     return jsonify(album.to_json()), 200
 
 
-@app_views.route("/albums/<album_id>", methods=["DELETE"],
-                 strict_slashes=False)
+@app_views.route("/albums/<album_id>", methods=["DELETE"], strict_slashes=False)
 @swag_from(delete_album)
 def deletealbum(album_id):
     """
@@ -104,8 +103,7 @@ def post_album():
         new_instance.save()
         # Generate token
         token = new_instance.get_reset_token()
-        return jsonify({"msg": "album created successfully",
-                        "token": token}), 201
+        return jsonify({"msg": "album created successfully", "token": token}), 201
     except Exception as e:
         # Log the exception for debugging
         print(f"Error creating album: {e}")

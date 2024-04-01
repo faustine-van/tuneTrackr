@@ -65,8 +65,7 @@ def post_user():
         new_instance.save()
         # Generate token
         token = new_instance.get_reset_token()
-        return jsonify({"msg": "User created successfully",
-                        "token": token}), 201
+        return jsonify({"msg": "User created successfully", "token": token}), 201
     except Exception as e:
         # Log the exception for debugging
         print(f"Error creating user: {e}")
