@@ -17,12 +17,14 @@ register_swagger = {
                     "last_name": {"type": "string"},
                     "email": {"type": "string"},
                     "password": {"type": "string"},
+                    "role": {"type": "string"}
                 },
                 "example": {
                     "first_name": "Ex",
                     "last_name": "amples",
                     "email": "examples@gmail.com",
                     "password": "examples1234",
+                    "role": "'standard' | 'admin' | 'analyst'| 'artist' | 'manager'"
                 },
             },
         }

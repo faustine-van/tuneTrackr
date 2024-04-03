@@ -17,7 +17,7 @@ from flask import current_app as app
 from flask import jsonify, request, url_for
 from flasgger import swag_from
 from werkzeug.exceptions import InternalServerError
-from models.user import User
+from models.user import User, Role, UserRole
 from models import dbStorage
 from api.v1.auth import auth_s
 from exts import jwt
@@ -56,13 +56,23 @@ def post_user():
     if not data.get("password"):
         return jsonify({"msg": "Missing password"}), 400
 
+
     # Check if email already exists
     if dbStorage.search(User, {"email": data.get("email")}):
         return jsonify({"msg": "Email already exists"}), 400
 
+    # handle role of user
+    role = data.get("role", "standard")
+    roles_dict = dbStorage.search(Role, {"name": role}).values()
+    if not roles_dict:
+        return jsonify({"msg": f"{role} not found"}), 400
+    roles = [role.to_json() for role in roles_dict]
     try:
         new_instance = User(**data)
         new_instance.save()
+        if new_instance:
+            user_role = UserRole(user_id=new_instance.id, role_id=roles[0]['id'])
+            user_role.save()
         # Generate token
         token = new_instance.get_reset_token()
         return jsonify({"msg": "User created successfully", "token": token}), 201
@@ -156,12 +166,11 @@ def check_if_token_revoked(jwt_headers, jwt_payload):
 
 @auth_s.route("/profile", methods=["GET"], strict_slashes=False)
 @jwt_required()
-@auth_role("Standard")
 @swag_from(profile_swagger)
 def get_user_profile():
     """get current user object"""
     current_user_id = get_jwt_identity()
-    print(current_user_id)
+    # print(current_user_id)
     user = dbStorage.get(User, current_user_id)
     if not user:
         return {"msg": "User not found"}, 404

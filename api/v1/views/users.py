@@ -1,56 +1,68 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ objects that handle all authentication of RestFul API"""
 from flasgger import swag_from
-from flask import jsonify
-from models.user import User
+from flask import jsonify, request
+from models.genre import Genre
 from models import dbStorage
 from api.v1.views import app_views
-from api.v1.views.docs.users_d import (
-    get_users,
-    get_user,
-    update_user,
-    delete_user,
+from api.v1.views.docs.genres_swagger import (
+    get_genres,
+    get_genre,
+    update_genre,
+    delete_genre,
+    post_genre_swagger,
 )
+from flask_jwt_extended import jwt_required
+from api.v1.auth.decorators import auth_role
 
 
-@app_views.route("/users", methods=["GET"], strict_slashes=False)
-@swag_from(get_users)
-def view_users():
+@app_views.route("/genres", methods=["GET"], strict_slashes=False)
+@jwt_required()
+@auth_role("artist")
+@swag_from(get_genres)
+def view_genres():
     """
-    Get all users
+    Get all genres
     """
-    all_users = [user.to_json() for user in dbStorage.all(User).values()]
-    return jsonify(all_users), 200
+    items = [genre.to_json() for genre in dbStorage.all(Genre).values()]
+    return jsonify({"url": request.url,
+                    "count": len(items),
+                    "items": items
+                    }
+                ), 200
 
 
-@app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
-@swag_from(get_user)
-def view_user(user_id):
+@app_views.route("/genres/<genre_id>", methods=["GET"], strict_slashes=False)
+@swag_from(get_genre)
+def view_genre(genre_id):
     """
-    Get  user
+    Get  genre
     """
-    if user_id is None:
-        return jsonify({"msg": "User not found"}), 404
+    if genre_id is None:
+        return jsonify({"msg": "genre not found"}), 404
 
-    user = dbStorage.get(User, user_id)
-    if not user:
-        return jsonify({"msg": "User not found"}), 404
+    genre = dbStorage.get(Genre, genre_id)
+    if not genre:
+        return jsonify({"msg": "genre not found"}), 404
 
-    return jsonify(user.to_json()), 200
+    return jsonify({"url": request.url,
+                    "count": 1,
+                    "item": genre.to_json()
+                   }), 200
 
 
-@app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
-@swag_from(update_user)
-def updateuser(user_id):
+@app_views.route("/genres/<genre_id>", methods=["PUT"], strict_slashes=False)
+@swag_from(update_genre)
+def updategenre(genre_id):
     """
-    Update user
+    Update genre
     """
-    if user_id is None:
-        return jsonify({"msg": "User not found"}), 404
+    if genre_id is None:
+        return jsonify({"msg": "genre not found"}), 404
 
-    user = dbStorage.get(User, user_id)
-    if not user:
-        return jsonify({"msg": "User not found"}), 404
+    genre = dbStorage.get(Aenre, genre_id)
+    if not genre:
+        return jsonify({"msg": "genre not found"}), 404
 
     try:
         data = request.get_json()
@@ -61,26 +73,49 @@ def updateuser(user_id):
 
     for key, value in data.items():
         if key not in ignore:
-            setattr(user, key, value)
-    user.save()
+            setattr(Genre, key, value)
+    genre.save()
 
-    return jsonify(user.to_json()), 200
+    return jsonify({"msg": "genre updated successfully"}), 200
 
 
-@app_views.route("/users/<user_id>", methods=["DELETE"], strict_slashes=False)
-@swag_from(delete_user)
-def deleteuser(user_id):
+@app_views.route("/genres/<genre_id>", methods=["DELETE"], strict_slashes=False)
+@swag_from(delete_genre)
+def deletegenre(genre_id):
     """
-    Delete all user
+    Delete all genre
     """
-    if user_id is None:
-        return jsonify({"msg": "User not found"}), 404
+    if genre_id is None:
+        return jsonify({"msg": "genre not found"}), 404
 
-    user = dbStorage.get(User, user_id)
-    if not user:
-        return jsonify({"msg": "User not found"}), 404
+    genre = dbStorage.get(Genre, genre_id)
+    if not genre:
+        return jsonify({"msg": "genre not found"}), 404
 
-    dbStorage.delete(user)
+    dbStorage.delete(genre)
     dbStorage.save()
 
-    return jsonify({"msg": "User delete successfully"}), 200
+    return jsonify({"msg": "genre delete successfully"}), 200
+
+
+@app_views.route("/genres", methods=["POST"], strict_slashes=False)
+@swag_from(post_genre_swagger)
+def post_genre():
+    """
+    Create a genre
+    """
+    try:
+        data = request.get_json()
+    except Exception:
+        return jsonify({"msg": "Not a JSON"}), 400
+
+    try:
+        new_instance = Genre(**data)
+        new_instance.save()
+        # Generate token
+        token = new_instance.get_reset_token()
+        return jsonify({"msg": "genre created successfully", "token": token}), 201
+    except Exception as e:
+        # Log the exception for debugging
+        print(f"Error creating genre: {e}")
+        return jsonify({"msg": "Can't create genre"}), 500

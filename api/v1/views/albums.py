@@ -3,6 +3,7 @@
 from flasgger import swag_from
 from flask import jsonify, request
 from models.album import Album
+from models.artist import Artist
 from models import dbStorage
 from api.v1.views import app_views
 from api.v1.views.docs.albums_swagger import (
@@ -21,7 +22,32 @@ def view_albums():
     Get all albums
     """
     all_albums = [album.to_json() for album in dbStorage.all(Album).values()]
-    return jsonify(all_albums), 200
+
+    formatted_albums = []
+    for album_json in all_albums:
+        # Access related artist and album information
+        artist = dbStorage.get(Artist, album_json["artist_id"])
+
+        # new formatted album dictionary
+        new_album_dict = {
+            "id": album_json["id"],
+            "title": album_json["title"],
+            "popularity": album_json["popularity"],
+            "artists": {
+                "artist_id": album_json["artist_id"],
+                "name": artist.name if artist else None,
+            },
+            "total_tracks": album_json["total_tracks"],
+            "release_date": album_json["release_date"],
+            "created_at": album_json["created_at"],
+            "updated_at": album_json["updated_at"]
+        }
+
+        # Append the formatted album dictionary to the list
+        formatted_albums.append(new_album_dict)
+
+    return jsonify({"count": len(all_albums), "items": formatted_albums,
+                   "url": request.url}), 200
 
 
 @app_views.route("/albums/<album_id>", methods=["GET"], strict_slashes=False)
@@ -37,7 +63,26 @@ def view_album(album_id):
     if not album:
         return jsonify({"msg": "album not found"}), 404
 
-    return jsonify(album.to_json()), 200
+
+    artist = dbStorage.get(Artist, album.artist_id)
+    if not artist:
+        return jsonify({"msg": "artist not found"}), 404
+
+    album_json = album.to_json()
+    album_dict = album_json
+    new_album_dict = {
+        "id": album_dict["id"],
+        "title": album_dict["title"],
+        "popularity": album_dict["popularity"],
+        "label": album_dict["label"],
+        "total_tracks": album_dict["total_tracks"],
+        "artists": {"artist_id": album_dict["artist_id"], "name": artist.name},
+        "release_date": album_dict["release_date"],
+        "created_at": album_dict["created_at"],
+        "updated_at": album_dict["updated_at"]
+    }
+
+    return jsonify({"url": request.url, "count": 1, "item": new_album_dict}), 200
 
 
 @app_views.route("/albums/<album_id>", methods=["PUT"], strict_slashes=False)

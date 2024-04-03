@@ -5,20 +5,34 @@
 
 - [Overview](#overview)
 - [Features](#features)
+- [Architecture](#architecture)
 - [Api](#api)
-- [Future Enhancements](#future-enhancements)
+- [Technologies Stack](#technologies-stack)
 - [Author](#author)
 
 
 ## Overview
-TuneTrackr is a music analytics web API servcie application that provides users with valuable insights into the world of music.
-It gathers data from popular streaming services such as YouTube and Spotify, analyzes trends, identifies popular genres, and ranks top artists.
-The platform offers comprehensive analytics, personalized recommendations, and customizable reports for both music enthusiasts and industry professionals.
-
+TuneTrackr is a music analytics web API servcie application that provides users with valuable insights into  music.
+It use dataset from popular streaming services, analyzes them, identifies popular artists, tracks, album, and ranks top artists.
+The Web Api offers comprehensive analytics and personalized recommendations for both music enthusiasts, artists and industry professionals.
 
 
 ## Features
 
+Here are the features:
+
+- User Account Management
+- Discover Genres
+- Explore Artists, Popular Artists,
+- Browse Albums, Popular Albuma
+- Search Tracks, Popular Tracks
+- Find New Album Releases
+- Similar Artists Suggestions
+- Group Artists
+- See Monthly Top Listened Artists
+- Discover Top Tracks
+
+## Architecture
 
 ## TuneTrackr API
 
@@ -130,15 +144,14 @@ Tracks Endpoints:
 
 Other Endpoints:
 
-- `/album_success` (POST): Predict the success of an album.
 - `/new_albums` (POST): Retrieve new albums based on release date.
-- `/recommend_similar_artists` (POST): Recommend similar artists.
-- `/track_genre` (POST): Classify track genre.
+- `/similar_artists` (POST): Recommend similar artists.
 - `/cluster_artists` (POST): Cluster artists based on attributes.
+- `/top_artists` (POST): Retrieve most listened and followed artists.
 - `/most_listened_artists` (POST): Retrieve most listened artists.
 - `/popular_artists` (POST): Retrieve popular artists based on follower and popularity.
 
-
+## Technologies Stack
 
 ## Author
 - Email: [faustinemuhayemariya44@gmail.com]()

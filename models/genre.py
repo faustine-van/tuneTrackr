@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ Genre model """
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship

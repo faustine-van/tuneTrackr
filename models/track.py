@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ Track model """
 from sqlalchemy import Column, ForeignKey, String, Integer, DateTime
 from sqlalchemy.orm import relationship

@@ -2,7 +2,7 @@
 """Swagger Documentation Specification"""
 get_tracks = {
     "tags": ["tracks"],
-    "operationId": "getStatus",
+    "operationId": "getTracks",
     "responses": {
         "200": {
             "description": "Request executed successfully.",
@@ -11,7 +11,7 @@ get_tracks = {
 }
 get_track = {
     "tags": ["tracks"],
-    "operationId": "getStats",
+    "operationId": "getTrack",
     "parameters": [
         {
             "name": "track_id",

@@ -5,7 +5,10 @@ from flask import jsonify, abort, request
 from flasgger import swag_from
 from api.v1.views import app_views
 from api.v1.views.trains.get_top import get_popular, get_new_albums, get_top_artists
-from api.v1.views.docs.get_swagger import get_top_popular
+from api.v1.views.docs.get_swagger import (
+    get_top_popular, get_top_artists_swagger,
+    get_new_albums_swagger,
+)
 from models.album import Album
 from models.artist import Artist
 from models.track import Track
@@ -72,13 +75,14 @@ def top_popular(item_type):
 
 
 @app_views.route("/artists/top_artists", methods=["GET"], strict_slashes=False)
+@swag_from(get_top_artists_swagger)
 def top_artists():
     """top artists, albums, tracks"""
     itype = request.args.get("item_type")
     if itype is None:
-        return jsonify({"msg": "Missing 'itype'"}), 400
+        return jsonify({"msg": "Missing 'item_type'"}), 400
     elif itype == "":
-        return jsonify({"msg": "Missing 'itype value'"}), 400
+        return jsonify({"msg": "Missing 'item_type' value"}), 400
 
     try:
         num_items = int(request.args.get("item_count", default=0))
@@ -108,6 +112,7 @@ def top_artists():
 
 
 @app_views.route("albums/new_albums", methods=["GET"], strict_slashes=False)
+@swag_from(get_new_albums_swagger)
 def new_albums():
     """new albums"""
     try:

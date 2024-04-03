@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ Artist model """
 from sqlalchemy import Column, ForeignKey, String, Integer
 from sqlalchemy.orm import relationship

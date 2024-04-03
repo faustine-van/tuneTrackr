@@ -2,7 +2,7 @@
 """Swagger Documentation Specification"""
 get_artists = {
     "tags": ["artists"],
-    "operationId": "getStatus",
+    "operationId": "getArtists",
     "responses": {
         "200": {
             "description": "Request executed successfully.",
@@ -11,7 +11,7 @@ get_artists = {
 }
 get_artist = {
     "tags": ["artists"],
-    "operationId": "getStats",
+    "operationId": "getArtists",
     "parameters": [
         {
             "name": "artist_id",

@@ -2,7 +2,7 @@
 """Swagger Documentation Specification"""
 get_genres = {
     "tags": ["genres"],
-    "operationId": "getStatus",
+    "operationId": "getGenres",
     "responses": {
         "200": {
             "description": "Request executed successfully.",
@@ -11,7 +11,7 @@ get_genres = {
 }
 get_genre = {
     "tags": ["genres"],
-    "operationId": "getStats",
+    "operationId": "getGenre",
     "parameters": [
         {
             "name": "genre_id",
@@ -26,6 +26,7 @@ get_genre = {
             "description": "Request executed successfully.",
         },
     },
+    "security": [{"Bearer": []}]
 }
 update_genre = {
     "tags": ["genres"],

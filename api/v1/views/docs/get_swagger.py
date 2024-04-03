@@ -2,7 +2,7 @@
 """API Documentation for GET requests"""
 
 get_top_popular = {
-    "tags": ["analytics"],
+    "tags": ["music-analytics"],
     "operationId": "getPopular",
     "parameters": [
         {
@@ -20,7 +20,7 @@ get_top_popular = {
 }
 
 get_similar_artists = {
-    "tags": ["analytics"],
+    "tags": ["music-analytics"],
     "operationId": "getSimilarArtists",
     "parameters": [
         {
@@ -46,7 +46,7 @@ get_similar_artists = {
 }
 
 get_similar_tracks = {
-    "tags": ["analytics"],
+    "tags": ["music-analytics"],
     "operationId": "getSimilarTracks",
     "parameters": [
         {
@@ -72,7 +72,7 @@ get_similar_tracks = {
 }
 
 get_cluster = {
-    "tags": ["analytics"],
+    "tags": ["music-analytics"],
     "operationId": "getCluster",
     "parameters": [
         {
@@ -86,7 +86,51 @@ get_cluster = {
         }
     ],
     "responses": {
-        "404": {"description": "Artist not found."},
-        "201": {"description": "Request executed successfully."},
+        "200": {"description": "Request executed successfully."},
+    },
+}
+
+get_top_artists_swagger  = {
+    "tags": ["music-analytics"],
+    "operationId": "getTopArtists",
+    "parameters": [
+        {
+            "name": "item_type",
+            "in": "query",
+            "required": True,
+            "description": "Type of item to retrieve. Valid values include 'followers', 'monthly_listeners'.",
+            "schema": {"type": "string", "enum": ['followers', 'monthly_listeners']}
+        },
+        {
+            "name": "item_count",
+            "in": "query",
+            "required": False,
+            "description": "Number of top artists to be retrieved.",
+            "default": 5,
+            "minimum": 2,
+            "schema": {"type": "integer"},
+        }
+    ],
+    "responses": {
+        "200": {"description": "Request executed successfully."},
+    },
+}
+
+get_new_albums_swagger = {
+    "tags": ["music-analytics"],
+    "operationId": "getNewAlbums",
+    "parameters": [
+        {
+            "name": "item_count",
+            "in": "query",
+            "required": False,
+            "description": "Number of new albums realeased soon to be retrieved.",
+            "default": 5,
+            "minimum": 2,
+            "schema": {"type": "integer"},
+        }
+    ],
+    "responses": {
+        "200": {"description": "Request executed successfully."},
     },
 }

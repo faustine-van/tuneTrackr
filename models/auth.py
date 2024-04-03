@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ auth for user module"""
 from models.base import BaseTune, Base
 from sqlalchemy import Column, String, ForeignKey, DateTime

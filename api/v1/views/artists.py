@@ -21,7 +21,9 @@ def view_artists():
     Get all artists
     """
     items = [artist.to_json() for artist in dbStorage.all(Artist).values()]
-    return jsonify(items), 200
+    return jsonify({"count": len(items),
+                   "items": items,
+                   "url": request.url}), 200
 
 
 @app_views.route("/artists/<artist_id>", methods=["GET"], strict_slashes=False)
@@ -37,7 +39,9 @@ def view_artist(artist_id):
     if not artist:
         return jsonify({"msg": "artist not found"}), 404
 
-    return jsonify(artist.to_json()), 200
+    return jsonify({"count": 1,
+                   "item": artist.to_json(),
+                   "url": request.url}), 200
 
 
 @app_views.route("/artists/<artist_id>", methods=["PUT"], strict_slashes=False)

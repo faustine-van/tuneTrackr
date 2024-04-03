@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ User model """
 import bcrypt
 from flask import current_app as app

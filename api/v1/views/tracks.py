@@ -2,7 +2,7 @@
 """ objects that handle all authentication of RestFul API"""
 import json
 from flasgger import swag_from
-from flask import jsonify
+from flask import jsonify, request
 from models.track import Track
 from models.album import Album
 from models.artist import Artist
@@ -98,7 +98,7 @@ def view_track(track_id):
         "track_rank": track_dict["track_rank"],
     }
 
-    return jsonify(new_track_dict), 200
+    return jsonify({"url": request.url, "count": 1, "items": new_track_dict}), 200
 
 
 @app_views.route("/tracks/<track_id>", methods=["PUT"], strict_slashes=False)

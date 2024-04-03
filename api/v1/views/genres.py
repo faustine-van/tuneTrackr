@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ objects that handle all authentication of RestFul API"""
 from flasgger import swag_from
-from flask import jsonify
+from flask import jsonify, request
 from models.genre import Genre
 from models import dbStorage
 from api.v1.views import app_views
@@ -12,16 +12,24 @@ from api.v1.views.docs.genres_swagger import (
     delete_genre,
     post_genre_swagger,
 )
+from flask_jwt_extended import jwt_required
+from api.v1.auth.decorators import auth_role
 
 
 @app_views.route("/genres", methods=["GET"], strict_slashes=False)
+@jwt_required()
+@auth_role("artist")
 @swag_from(get_genres)
 def view_genres():
     """
     Get all genres
     """
-    all_genres = [genre.to_json() for genre in dbStorage.all(Genre).values()]
-    return jsonify(all_genres), 200
+    items = [genre.to_json() for genre in dbStorage.all(Genre).values()]
+    return jsonify({"url": request.url,
+                    "count": len(items),
+                    "items": items
+                    }
+                ), 200
 
 
 @app_views.route("/genres/<genre_id>", methods=["GET"], strict_slashes=False)
@@ -37,7 +45,10 @@ def view_genre(genre_id):
     if not genre:
         return jsonify({"msg": "genre not found"}), 404
 
-    return jsonify(genre.to_json()), 200
+    return jsonify({"url": request.url,
+                    "count": 1,
+                    "item": genre.to_json()
+                   }), 200
 
 
 @app_views.route("/genres/<genre_id>", methods=["PUT"], strict_slashes=False)
@@ -65,7 +76,7 @@ def updategenre(genre_id):
             setattr(Genre, key, value)
     genre.save()
 
-    return jsonify(genre.to_json()), 200
+    return jsonify({"msg": "genre updated successfully"}), 200
 
 
 @app_views.route("/genres/<genre_id>", methods=["DELETE"], strict_slashes=False)

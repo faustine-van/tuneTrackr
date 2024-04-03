@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ app module """
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -23,7 +23,7 @@ cors = CORS(app, resources={r"/api/v1*": {"origins": "*"}})
 jwt.init_app(app)
 # main
 mail = Mail(app)
-# documentations
+# configure swagger for api
 URL = "https://github.com/faustine-van/tuneTrackr?tab=MIT-1-ov-file"
 swagger_template = {
     "swagger": "2.0",

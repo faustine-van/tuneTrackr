@@ -17,7 +17,7 @@ user = User(email="bibo.com", password="12345")
 #    print(user.to_json())
 
 # search data
-for data in dbStorage.search(User, {"email": "faustinemuhayemariya44@gmail.com"}).values():
+for data in dbStorage.search(User, {"email": "vanb@gmail.com"}).values():
     print(data.to_json())
 
 # updated
