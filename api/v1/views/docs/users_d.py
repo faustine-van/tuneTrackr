@@ -2,7 +2,7 @@
 """Swagger Documentation Specification"""
 get_users = {
     "tags": ["users"],
-    "operationId": "getStatus",
+    "operationId": "getUsers",
     "responses": {
         "200": {
             "description": "Request executed successfully.",
@@ -11,7 +11,7 @@ get_users = {
 }
 get_user = {
     "tags": ["users"],
-    "operationId": "getStats",
+    "operationId": "getUser",
     "parameters": [
         {
             "name": "user_id",

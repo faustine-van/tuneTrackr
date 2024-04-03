@@ -21,7 +21,7 @@ from models.user import User, Role, UserRole
 from models import dbStorage
 from api.v1.auth import auth_s
 from exts import jwt
-from api.v1.auth.decorators import auth_role
+from api.v1.auth.decorators import auth_role, auth_role_required
 from api.v1.auth.helpers import (
     add_token_to_db,
     revoke_token,
@@ -166,6 +166,7 @@ def check_if_token_revoked(jwt_headers, jwt_payload):
 
 @auth_s.route("/profile", methods=["GET"], strict_slashes=False)
 @jwt_required()
+@auth_role_required('standard', 'manager', 'analyst', 'admin', 'artist')
 @swag_from(profile_swagger)
 def get_user_profile():
     """get current user object"""

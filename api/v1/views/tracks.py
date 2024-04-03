@@ -123,7 +123,7 @@ def updatetrack(track_id):
 
     for key, value in data.items():
         if key not in ignore:
-            setattr(Track, key, value)
+            setattr(track, key, value)
     track.save()
 
     return jsonify(track.to_json()), 200
@@ -142,7 +142,7 @@ def deletetrack(track_id):
     if not track:
         return jsonify({"msg": "track not found"}), 404
 
-    dbStorage.delete(track)
+    dbStorage.remove(track)
     dbStorage.save()
 
     return jsonify({"msg": "track delete successfully"}), 200
@@ -159,13 +159,6 @@ def post_track():
     except Exception:
         return jsonify({"msg": "Not a JSON"}), 400
 
-    try:
-        new_instance = Track(**data)
-        new_instance.save()
-        # Generate token
-        token = new_instance.get_reset_token()
-        return jsonify({"msg": "track created successfully", "token": token}), 201
-    except Exception as e:
-        # Log the exception for debugging
-        print(f"Error creating track: {e}")
-        return jsonify({"msg": "Can't create track"}), 500
+    new_instance = Track(**data)
+    new_instance.save()
+    return jsonify({"msg": "Track created successfult"}), 201

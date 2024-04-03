@@ -66,7 +66,7 @@ def updateartist(artist_id):
 
     for key, value in data.items():
         if key not in ignore:
-            setattr(Artist, key, value)
+            setattr(artist, key, value)
     artist.save()
 
     return jsonify(artist.to_json()), 200
@@ -85,7 +85,7 @@ def delete_artist(artist_id):
     if not artist:
         return jsonify({"msg": "artist not found"}), 404
 
-    dbStorage.delete(artist)
+    dbStorage.remove(artist)
     dbStorage.save()
 
     return jsonify({"msg": "artist delete successfully"}), 200
@@ -102,15 +102,6 @@ def post_artist():
     except Exception:
         return jsonify({"msg": "Not a JSON"}), 400
 
-    if not data.get("name"):
-        return jsonify({"msg": "Missing name"}), 400
-    try:
-        new_instance = Artist(**data)
-        new_instance.save()
-        # Generate token
-        token = new_instance.get_reset_token()
-        return jsonify({"msg": "artist created successfully", "token": token}), 201
-    except Exception as e:
-        # Log the exception for debugging
-        print(f"Error creating artist: {e}")
-        return jsonify({"msg": "Can't create artist"}), 500
+    new_instance = Artist(**data)
+    new_instance.save()
+    return jsonify({"msg": "Artist created successfult"}), 201

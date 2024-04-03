@@ -107,7 +107,7 @@ def updatealbum(album_id):
 
     for key, value in data.items():
         if key not in ignore:
-            setattr(Album, key, value)
+            setattr(album, key, value)
     album.save()
 
     return jsonify(album.to_json()), 200
@@ -126,7 +126,7 @@ def deletealbum(album_id):
     if not album:
         return jsonify({"msg": "album not found"}), 404
 
-    dbStorage.delete(album)
+    dbStorage.remove(album)
     dbStorage.save()
 
     return jsonify({"msg": "album delete successfully"}), 200
@@ -143,13 +143,6 @@ def post_album():
     except Exception:
         return jsonify({"msg": "Not a JSON"}), 400
 
-    try:
-        new_instance = Album(**data)
-        new_instance.save()
-        # Generate token
-        token = new_instance.get_reset_token()
-        return jsonify({"msg": "album created successfully", "token": token}), 201
-    except Exception as e:
-        # Log the exception for debugging
-        print(f"Error creating album: {e}")
-        return jsonify({"msg": "Can't create album"}), 500
+    new_instance = Album(**data)
+    new_instance.save()
+    return jsonify({"msg": "Album created successfult"}), 201

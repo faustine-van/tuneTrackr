@@ -12,19 +12,16 @@ from api.v1.views.docs.genres_swagger import (
     delete_genre,
     post_genre_swagger,
 )
-from flask_jwt_extended import jwt_required
-from api.v1.auth.decorators import auth_role
 
 
 @app_views.route("/genres", methods=["GET"], strict_slashes=False)
-@jwt_required()
-@auth_role("artist")
 @swag_from(get_genres)
 def view_genres():
     """
     Get all genres
     """
     items = [genre.to_json() for genre in dbStorage.all(Genre).values()]
+    
     return jsonify({"url": request.url,
                     "count": len(items),
                     "items": items
@@ -45,10 +42,7 @@ def view_genre(genre_id):
     if not genre:
         return jsonify({"msg": "genre not found"}), 404
 
-    return jsonify({"url": request.url,
-                    "count": 1,
-                    "item": genre.to_json()
-                   }), 200
+    return jsonify(genre.to_json()), 200
 
 
 @app_views.route("/genres/<genre_id>", methods=["PUT"], strict_slashes=False)
@@ -60,7 +54,7 @@ def updategenre(genre_id):
     if genre_id is None:
         return jsonify({"msg": "genre not found"}), 404
 
-    genre = dbStorage.get(Aenre, genre_id)
+    genre = dbStorage.get(Genre, genre_id)
     if not genre:
         return jsonify({"msg": "genre not found"}), 404
 
@@ -73,10 +67,10 @@ def updategenre(genre_id):
 
     for key, value in data.items():
         if key not in ignore:
-            setattr(Genre, key, value)
+            setattr(genre, key, value)
     genre.save()
 
-    return jsonify({"msg": "genre updated successfully"}), 200
+    return jsonify(genre.to_json()), 200
 
 
 @app_views.route("/genres/<genre_id>", methods=["DELETE"], strict_slashes=False)
@@ -92,7 +86,7 @@ def deletegenre(genre_id):
     if not genre:
         return jsonify({"msg": "genre not found"}), 404
 
-    dbStorage.delete(genre)
+    dbStorage.remove(genre)
     dbStorage.save()
 
     return jsonify({"msg": "genre delete successfully"}), 200
@@ -109,13 +103,6 @@ def post_genre():
     except Exception:
         return jsonify({"msg": "Not a JSON"}), 400
 
-    try:
-        new_instance = Genre(**data)
-        new_instance.save()
-        # Generate token
-        token = new_instance.get_reset_token()
-        return jsonify({"msg": "genre created successfully", "token": token}), 201
-    except Exception as e:
-        # Log the exception for debugging
-        print(f"Error creating genre: {e}")
-        return jsonify({"msg": "Can't create genre"}), 500
+    new_instance = Genre(**data)
+    new_instance.save()
+    return jsonify({"msg": "Genre created successfult"}), 201
