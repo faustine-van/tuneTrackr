@@ -33,6 +33,7 @@ Here are the features:
 - Discover Top Tracks
 
 ## Architecture
+![Architecture](https://github.com/faustine-van/tuneTrackr/assets/125466059/fae8492c-3f1a-458b-ae06-31a0f3cea8a3)
 
 ## TuneTrackr API
 
@@ -152,6 +153,7 @@ Other Endpoints:
 - `/popular_artists` (POST): Retrieve popular artists based on follower and popularity.
 
 ## Technologies Stack
+![diagram-export-4-3-2024-10_10_51-AM](https://github.com/faustine-van/tuneTrackr/assets/125466059/caff3dfd-e3b4-4648-94c0-f2fada858eee)
 
 ## Author
 - Email: [faustinemuhayemariya44@gmail.com]()
