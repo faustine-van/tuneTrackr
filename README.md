@@ -12,7 +12,7 @@
 
 
 ## Overview
-TuneTrackr is a music analytics web API servcie application that provides users with valuable insights into  music.
+TuneTrackr is a music analytics web API service application that provides users with valuable insights into  music.
 It use dataset from popular streaming services, analyzes them, identifies popular artists, tracks, album, and ranks top artists.
 The Web Api offers comprehensive analytics and personalized recommendations for both music enthusiasts, artists and industry professionals.
 
@@ -50,7 +50,7 @@ TuneTrackr API
 
 #### `models/`
 
-- `base.py`: base of all models of the API - handle serialization to file
+- `base.py`: base of all models of the API - handle serialization
 - `user.py`: user model
 - `auth.py`: auth model
 - `storage/db.py`: database dbStorage model
