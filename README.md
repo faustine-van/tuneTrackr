@@ -73,8 +73,9 @@ TuneTrackr API
 ```
 $ git clone git@github.com:faustine-van/tuneTrackr.git
 $ cd tuneTrackr
-# you can use virtual environment(recommend) 
+# you can use virtual environment(recommend)
 ```
+
   1. First copy file name it `.env`
   	using this command `copy .env.shadow .env`
   2. add environment variables to it:
@@ -86,8 +87,9 @@ $ cd tuneTrackr
 
 ```
 $ pip3 install -r requirements.txt
-```
 
+# you can sample mysql for database file `tuneTrack.sql` 
+```
 
 
 ### Run
