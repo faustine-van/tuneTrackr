@@ -8,6 +8,7 @@ get_genres = {
             "description": "Request executed successfully.",
         },
     },
+    "security": [{"Bearer": []}]
 }
 get_genre = {
     "tags": ["genres"],
@@ -56,6 +57,7 @@ update_genre = {
         "404": {"description": "genre not found!"},
         "201": {"description": "Request executed successfully."},
     },
+    "security": [{"Bearer": []}]
 }
 delete_genre = {
     "tags": ["genres"],
@@ -73,6 +75,7 @@ delete_genre = {
         "404": {"description": "genre not found!"},
         "201": {"description": "Request executed successfully."},
     },
+    "security": [{"Bearer": []}]
 }
 post_genre_swagger = {
     "tags": ["genres"],
@@ -95,4 +98,5 @@ post_genre_swagger = {
         "404": {"description": "Genre not found!"},
         "201": {"description": "Request executed successfully."},
     },
+    "security": [{"Bearer": []}]
 }

@@ -26,6 +26,7 @@ get_user = {
             "description": "Request executed successfully.",
         },
     },
+    "security": [{"Bearer": []}]
 }
 update_user = {
     "tags": ["users"],
@@ -65,6 +66,7 @@ update_user = {
         "404": {"description": "User not found!"},
         "201": {"description": "Request executed successfully."},
     },
+    "security": [{"Bearer": []}]
 }
 delete_user = {
     "tags": ["users"],
@@ -82,4 +84,5 @@ delete_user = {
         "404": {"description": "User not found!"},
         "201": {"description": "Request executed successfully."},
     },
+    "security": [{"Bearer": []}]
 }

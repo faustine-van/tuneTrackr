@@ -166,7 +166,7 @@ def check_if_token_revoked(jwt_headers, jwt_payload):
 
 @auth_s.route("/profile", methods=["GET"], strict_slashes=False)
 @jwt_required()
-@auth_role_required('standard', 'manager', 'analyst', 'admin', 'artist')
+# @auth_role_required('standard', 'manager', 'analyst', 'admin', 'artist')
 @swag_from(profile_swagger)
 def get_user_profile():
     """get current user object"""

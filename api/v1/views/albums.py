@@ -13,9 +13,11 @@ from api.v1.views.docs.albums_swagger import (
     delete_album,
     post_album_swagger,
 )
+from flask_jwt_extended import jwt_required
 
 
 @app_views.route("/albums", methods=["GET"], strict_slashes=False)
+@jwt_required()
 @swag_from(get_albums)
 def view_albums():
     """

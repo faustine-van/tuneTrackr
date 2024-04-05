@@ -33,6 +33,7 @@ def view_users():
 
 
 @app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
+@jwt_required()
 @swag_from(get_user)
 def view_user(user_id):
     """
@@ -52,6 +53,7 @@ def view_user(user_id):
 
 
 @app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
+@jwt_required()
 @swag_from(update_user)
 def updateuser(user_id):
     """
@@ -80,6 +82,7 @@ def updateuser(user_id):
 
 
 @app_views.route("/users/<user_id>", methods=["DELETE"], strict_slashes=False)
+@jwt_required()
 @swag_from(delete_user)
 def deleteuser(user_id):
     """
